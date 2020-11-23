@@ -1,6 +1,6 @@
 # gatsby-plugin-herodamage-posts
 
-A [Gatsby](https://github.com/gatsbyjs/gatsby) plugin for [shadowlands-prepatch.herodamage.com](https://github.com/herotc/shadowlands-prepatch.herodamage.com).
+A [Gatsby](https://github.com/gatsbyjs/gatsby) plugin for [shadowlands.herodamage.com](https://github.com/herotc/shadowlands.herodamage.com).
 Programmatically generate blog posts pages from `src/posts/`.
 
 ## Prerequisites
@@ -41,5 +41,5 @@ module.exports = {
 }
 ```
 
-Then implement the `src/templates/blog-posts.js` template file.  
+Then implement the `src/templates/blog-posts.js` template file.
 You can also implements a `src/pages/blog.js` page to list the posts with a pagination.

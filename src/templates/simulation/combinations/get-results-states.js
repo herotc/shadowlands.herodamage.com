@@ -1,7 +1,7 @@
 // Dependencies
 import merge from 'lodash/merge'
-import { getAzeriteInformationByName, getTalentsTree } from '../../../utils/wow/core'
-import { wowAzeriteEssenceLabel, wowAzeriteLabel, wowTalentsLabel } from '../../../utils/wow/ui'
+import { getTalentsTree } from '../../../utils/wow/core'
+import { wowTalentsLabel } from '../../../utils/wow/ui'
 
 function getStacksCount (simulationType) {
   if (simulationType === 'combinations-default') return 1
@@ -30,29 +30,6 @@ export function getResultsStates (props) {
 
     result.talentsLabel = wowTalentsLabel(rawTalentLabels, wowClass, spec, lang)
 
-    const rawLabelsSplitted = rawLabels.split('; ').join(' / ').split(' / ')
-    result.label = rawLabelsSplitted.map((label, index) => {
-      if (label === 'None') return label
-      switch (simulationType) {
-        case 'combinations-default':
-        case 'combinations-0a':
-        case 'combinations-1a':
-        case 'combinations-2a':
-        case 'combinations-3a': {
-          return wowAzeriteLabel(label, wowClass, spec, rawTalentLabels, lang, false) + ` (x${stacksCount})`
-        }
-        case 'combinations-0e':
-        case 'combinations-1e':
-        case 'combinations-2e':
-        case 'combinations-3e':
-        case 'combinations-4e': {
-          // We do not have the Minor / Major information on the combinations, it's always first = major and others = minor
-          const newLabel = `${label}${index === 0 ? ' (Major)' : ' (Minor)'}`
-          return wowAzeriteEssenceLabel(newLabel, wowClass, spec, rawTalentLabels, lang, false)
-        }
-      }
-    }).join(' ')
-
     if (multiTargets) result.bossDPS = row[5]
     result.dpsPercentageDifference = (100 * dps / maxDPS - 100).toFixed(1)
 
@@ -65,31 +42,6 @@ export function getResultsStates (props) {
       if (talentChar !== 0) {
         const col = talentChar - 1
         if (!selectedTalents[row][col]) selectedTalents[row][col] = { selected: true }
-      }
-    }
-
-    // filter the labels to get the ones that can be selected
-    for (const rawLabel of rawLabelsSplitted) {
-      if (simulationType === 'combinations-default' || rawLabel === 'None') continue
-      if (labelsFilter[rawLabel]) continue
-
-      switch (simulationType) {
-        case 'combinations-default':
-        case 'combinations-0a':
-        case 'combinations-1a':
-        case 'combinations-2a':
-        case 'combinations-3a': {
-          const { spellId, tier, classesId } = getAzeriteInformationByName(rawLabel)
-          labelsFilter[rawLabel] = { spellName: rawLabel, selected: true, spellId, tier, classesId }
-          break
-        }
-        case 'combinations-0e':
-        case 'combinations-1e':
-        case 'combinations-2e':
-        case 'combinations-3e':
-        case 'combinations-4e': {
-          break
-        }
       }
     }
   }
@@ -107,5 +59,5 @@ export function getResultsStates (props) {
   const talentsTree = {}
   merge(talentsTree, defaultTalentsTree, selectedTalents)
 
-  return { multiTargets, results, azeritePowersFilter: labelsFilter, talentsTree }
+  return { multiTargets, results, talentsTree }
 }

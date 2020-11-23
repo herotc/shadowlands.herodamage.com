@@ -2,8 +2,6 @@ import load from 'little-loader'
 
 import {
   refreshWowheadLinks,
-  wowAzeriteEssenceLabel,
-  wowAzeriteLabel,
   wowRaceLabel,
   wowTrinketLabel
 } from '../../utils/wow/ui'
@@ -114,9 +112,7 @@ function processData (simulationType, data, wowClass, spec, talentsMapping, temp
       const absStepVal = curAbsVal - prevAbsVal
       const curVal = 100 * ((templateDPS + curAbsVal) / templateDPS - 1)
       const stepVal = curVal - prevVal
-      const tierDesc = simulationType === 'azerite-stacks' ? 'Stacks: ' :
-        simulationType === 'essences' ? 'Rank: ' :
-        'Item Level: '
+      const tierDesc = 'Item Level: '
       const tooltip = `
         <div class="chart-tooltip">
           <b>${data.getValue(row, 0).split('--')[0]}<br/> ${tierDesc}${data.getColumnLabel(col)}</b><br/>
@@ -133,21 +129,6 @@ function processData (simulationType, data, wowClass, spec, talentsMapping, temp
   // Remove labels from data to add interactive ones in HTML
   const labels = []
   switch (simulationType) {
-    case 'azerite-levels':
-    case 'azerite-stacks':
-      for (let row = 0; row < data.getNumberOfRows(); row++) {
-        const wowLabel = data.getValue(row, 0)
-        labels.push(wowAzeriteLabel(wowLabel, wowClass, spec, talentsMapping, lang))
-        data.setValue(row, 0, '')
-      }
-      break
-    case 'essences':
-      for (let row = 0; row < data.getNumberOfRows(); row++) {
-        const wowLabel = data.getValue(row, 0)
-        labels.push(wowAzeriteEssenceLabel(wowLabel, wowClass, spec, talentsMapping, lang))
-        data.setValue(row, 0, '')
-      }
-      break
     case 'trinkets':
       for (let row = 0; row < data.getNumberOfRows(); row++) {
         const wowLabel = data.getValue(row, 0)
@@ -196,9 +177,6 @@ export async function stackedChart (pageContext, chartTitle, lang) {
       case 'races':
         rawDataProcessed = processRacesData(rawData, wowClass, spec, talentsMapping, templateDPS, lang)
         break
-      case 'azerite-levels':
-      case 'azerite-stacks':
-      case 'essences':
       case 'trinkets':
         rawDataProcessed = processData(simulationType, rawData, wowClass, spec, talentsMapping, templateDPS, lang)
     }
@@ -217,9 +195,6 @@ export async function stackedChart (pageContext, chartTitle, lang) {
           hAxisStacks.push(i * 0.5)
         }
         break
-      case 'azerite-levels':
-      case 'azerite-stacks':
-      case 'essences':
       case 'trinkets':
         // A gridline every 2%
         for (let i = 1; i <= maxPercentageGainHAxis / 2; i++) {

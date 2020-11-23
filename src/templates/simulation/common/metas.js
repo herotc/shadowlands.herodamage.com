@@ -55,12 +55,6 @@ const Metas = ({ i18nPlugin, fightLength, fightLengthVariation, simcBuildTimesta
                 case 'bonus_id':
                   wowheadArgs += `&bonus=${value.split('/').join(':')}`
                   break
-                case 'azerite_powers':
-                  if (simulationCategory === 'azerite' || simulationCategory === 'combinations') break
-                  const powers = value.split('/')
-                  if (!parseInt(powers[0]) <= 12) powers.unshift(getWowClassId(wowClass).toString())
-                  wowheadArgs += `&azerite-powers=${powers.join(':')}`
-                  break
               }
             }
             return <a key={simcEncoded} href={`${getWowheadLink(lang)}${wowheadArgs}`} data-wh-rename-link="false"/>

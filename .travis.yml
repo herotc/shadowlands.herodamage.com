@@ -12,7 +12,7 @@ node_js:
 
 env:
   global:
-    - GH_REPO=https://${GH_TOKEN}@github.com/herotc/shadowlands-prepatch.herodamage.com.git
+    - GH_REPO=https://${GH_TOKEN}@github.com/herotc/shadowlands.herodamage.com.git
     - GH_SOURCE_BRANCH=master
     - GH_TARGET_BRANCH=gh-pages
     - NODE_ENV=production

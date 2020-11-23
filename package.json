@@ -1,13 +1,13 @@
 {
-  "name": "herodamage-shadowlands-prepatch",
+  "name": "herodamage-shadowlands",
   "version": "0.0.1",
-  "description": "Shadowlands PrePatch (9.0) version of HeroDamage",
+  "description": "Shadowlands version of HeroDamage",
   "keywords": [
     "herotc",
     "herodamage",
     "world of warcraft",
-    "shadowlands prepatch",
-    "wow sl prepatch",
+    "shadowlands",
+    "wow sl",
     "theorycrafting",
     "simulationcraft",
     "simc",
@@ -15,7 +15,7 @@
   ],
   "homepage": "https://www.herodamage.com/",
   "bugs": {
-    "url": "https://github.com/herotc/shadowlands-prepatch.herodamage.com/issues"
+    "url": "https://github.com/herotc/shadowlands.herodamage.com/issues"
   },
   "license": "EUPL-1.2",
   "author": {
@@ -42,7 +42,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/herotc/shadowlands-prepatch.herodamage.com.git"
+    "url": "https://github.com/herotc/shadowlands.herodamage.com.git"
   },
   "scripts": {
     "postinstall": "cd scripts/i18n && npm install",

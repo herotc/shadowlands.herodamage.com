@@ -32,23 +32,10 @@ class CombinationsSimulationTemplate extends React.Component {
       ...resultsStates
     }
 
-    this.handleAzeritePowerSelect = this.handleAzeritePowerSelect.bind(this)
     this.handleTalentSelect = this.handleTalentSelect.bind(this)
     this.handleRequestSort = this.handleRequestSort.bind(this)
     this.handleChangePage = this.handleChangePage.bind(this)
     this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this)
-  }
-
-  handleAzeritePowerSelect (event, spellName) {
-    event.preventDefault()
-
-    const { azeritePowersFilter } = this.state
-    const selectedAzeritePowers = Object.entries(azeritePowersFilter).filter(([spellName, azeritePower]) => azeritePower.selected)
-    // Make sure we always have at least 1 azeritePower selected
-    if (selectedAzeritePowers.length > 1 || spellName !== selectedAzeritePowers[0][0]) {
-      azeritePowersFilter[spellName].selected = !azeritePowersFilter[spellName].selected
-      this.setState({ azeritePowersFilter })
-    }
   }
 
   handleTalentSelect (event, rowId, colId) {
@@ -77,8 +64,9 @@ class CombinationsSimulationTemplate extends React.Component {
   }
 
   isValidResult (result) {
-    const { talents, azeritePowers } = result
-    const { azeritePowersFilter, talentsTree } = this.state
+    const { talents } = result
+    const { talentsTree } = this.state
+
     if (talents) {
       for (let row = 0; row < talents.length; row++) {
         const talentChar = parseInt(talents.charAt(row))
@@ -88,12 +76,7 @@ class CombinationsSimulationTemplate extends React.Component {
         }
       }
     }
-    if (azeritePowers && azeritePowers !== 'None') {
-      // Multiple azeritePowers label separated by / aren't in the filter
-      if (!azeritePowersFilter[azeritePowers]) return true
-      // Ignore not selected powers
-      if (!azeritePowersFilter[azeritePowers].selected) return false
-    }
+
     return true
   }
 
@@ -123,7 +106,7 @@ class CombinationsSimulationTemplate extends React.Component {
 
   render () {
     const { data, i18nPlugin, pageContext } = this.props
-    const { multiTargets, order, orderBy, page, results, rowsPerPage, azeritePowersFilter, talentsTree } = this.state
+    const { multiTargets, order, orderBy, page, results, rowsPerPage, talentsTree } = this.state
     const { t, wowheadLink } = i18nPlugin
     const { fightStyle, fightLength, fightLengthVariation, name, simcBuildTimestamp, simcGitRevision, simulationFeaturedOrder, simulationCategory, simulationType, spec, targetError, templateGear, templateDPS, tier, variation, wowClass, wowVersion } = pageContext
     return (
@@ -133,19 +116,8 @@ class CombinationsSimulationTemplate extends React.Component {
           SimulationCraft.<br />You can consider everything within the target error DPS range to be mostly equal and
           requiring a more detailed investigation.</Trans></p>
         <p><Trans>The purpose of these simulations is to get a general idea of how different setups will compare with
-          each other and not to promote any definitive best builds. Several variables (like different trinkets, WF/TF
-          or ingame situations) are not taken into account. This is why you, as always, should <u><b>simulate your own
-            character</b></u> to find your optimal setup.</Trans></p>
-        <p><Trans>The fact that generic azerite powers are not included is intended. The goal of such simulations is
-          not
-          to find the best possibilities out of millions possible combinations but rather let you know <b>if a given
-            azerite power alone could impact talents choices</b>. One of the caveat is that it could happen with
-          further
-          stacks or a combination of two of them, those cases are not covered there. You might find more information
-          about such events on your class resources.</Trans></p>
-        <p><Trans>Of course, you can also check how the talents compare each other without any azerite power (just
-          unselect all of them). Which is ideal in case you are using only generic azerite powers for example.</Trans>
-        </p>
+          each other and not to promote any definitive best builds. Several variables (like different trinkets or ingame situations) are not taken into account.
+          This is why you, as always, should <u><b>simulate your own character</b></u> to find your optimal setup.</Trans></p>
         <Related data={data} fightStyle={fightStyle} simulationFeaturedOrder={simulationFeaturedOrder}
           simulationCategory={simulationCategory} simulationType={simulationType} spec={spec} t={t} tier={tier}
           variation={variation} />
@@ -157,23 +129,7 @@ class CombinationsSimulationTemplate extends React.Component {
         <CircularProgress id="results-loader" color="secondary" />}
         {results &&
         <div>
-          <Filters name={name} onAzeritePowerSelect={this.handleAzeritePowerSelect}
-            onTalentSelect={this.handleTalentSelect}
-            azeritePowersFilter={azeritePowersFilter} talentsTree={talentsTree} wowheadLink={wowheadLink} />
-          {simulationType.endsWith('a') &&
-          <p style={{ textAlign: 'center' }}>
-            <span className={'azerite-tier3-specific'}>Outer Ring (Spec Specific)</span>
-            &nbsp;|&nbsp;
-            <span className={'azerite-tier3-generic'}>Outer Ring (Generic)</span>
-            &nbsp;|&nbsp;
-            <span className={'azerite-tier2'}>Inner Ring</span>
-          </p>}
-          {simulationType.endsWith('e') &&
-          <p style={{ textAlign: 'center' }}>
-            <span className={'azerite-essence-major'}>Major + Minor</span>
-            &nbsp;|&nbsp;
-            <span className={'azerite-essence-minor'}>Minor</span>
-          </p>}
+          <Filters name={name} onTalentSelect={this.handleTalentSelect} talentsTree={talentsTree} wowheadLink={wowheadLink} />
           <Table>
             <EnhancedTableHead multiTargets={multiTargets} onRequestSort={this.handleRequestSort}
               order={order} orderBy={orderBy} />

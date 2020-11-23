@@ -6,12 +6,12 @@
     "gatsby-plugin"
   ],
   "bugs": {
-    "url": "https://github.com/herotc/shadowlands-prepatch.herodamage.com/issues"
+    "url": "https://github.com/herotc/shadowlands.herodamage.com/issues"
   },
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/herotc/shadowlands-prepatch.herodamage.com/tree/master/plugins/gatsby-plugin-herodamage-material-ui"
+    "url": "https://github.com/herotc/shadowlands.herodamage.com/tree/master/plugins/gatsby-plugin-herodamage-material-ui"
   },
   "peerDependencies": {
     "@material-ui/core": "^3.0.0",

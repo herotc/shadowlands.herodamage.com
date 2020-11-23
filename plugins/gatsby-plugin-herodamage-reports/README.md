@@ -1,6 +1,6 @@
 # gatsby-plugin-herodamage-reports
 
-A [Gatsby](https://github.com/gatsbyjs/gatsby) plugin for [shadowlands-prepatch.herodamage.com](https://github.com/herotc/shadowlands-prepatch.herodamage.com).
+A [Gatsby](https://github.com/gatsbyjs/gatsby) plugin for [shadowlands.herodamage.com](https://github.com/herotc/shadowlands.herodamage.com).
 Programmatically generate reports pages from `static/reports/`.
 
 ## Prerequisites
@@ -27,5 +27,5 @@ module.exports = {
 }
 ```
 
-Then implement as many templates corresponding to simulationType as needed in `src/templates/simulations/`.  
+Then implement as many templates corresponding to simulationType as needed in `src/templates/simulations/`.
 You also have to implement a `src/templates/wow-class.js` template which is used by the classes index pages.

@@ -1,6 +1,6 @@
 # gatsby-plugin-herodamage-layout
 
-A [Gatsby](https://github.com/gatsbyjs/gatsby) plugin for [shadowlands-prepatch.herodamage.com](https://github.com/herotc/shadowlands-prepatch.herodamage.com).
+A [Gatsby](https://github.com/gatsbyjs/gatsby) plugin for [shadowlands.herodamage.com](https://github.com/herotc/shadowlands.herodamage.com).
 Add support for page layout.
 Based on the [official plugin](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-layout).
 

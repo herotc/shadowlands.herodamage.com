@@ -2,11 +2,7 @@ import { createHash } from 'crypto'
 import { readFile } from 'fs'
 import { resolve } from 'path'
 import { promisify } from 'util'
-import {
-  getAzeriteInformationById,
-  getAzeriteInformationByName,
-  getWowClassIdAndSpecId
-} from '../../../src/utils/wow/core'
+import { getWowClassIdAndSpecId } from '../../../src/utils/wow/core'
 import * as mapping from './mapping'
 
 // Until we get promisified version from fs (promises API is still experimental)
@@ -68,45 +64,8 @@ export class ReportTransformer {
     const { metas, results } = report
     Object.assign(this.extraFields, { results })
 
-    let processedResults
-    switch (simulationType) {
-      case 'combinations-default':
-        let label = ''
-        const powerLabels = []
-        for (const simcEncoded of metas.templateGear) {
-          const parts = simcEncoded.split(',')
-          for (const part of parts) {
-            const [option, value] = part.split('=')
-            switch (option) {
-              case 'azerite_powers':
-                const powersId = value.split('/')
-                for (const powerId of powersId) {
-                  if (powerId === '' || parseInt(powerId) <= 12) continue
-                  const azeriteInformation = getAzeriteInformationById(powerId)
-                  if (!azeriteInformation) {
-                    console.log(`Cannot find information about azerite powerId "${powerId}" in "${name}"`)
-                    continue
-                  }
-                  const { spellName, tier } = azeriteInformation
-                  if (tier === 3) powerLabels.push(spellName)
-                }
-                break
-            }
-          }
-        }
-        label += powerLabels.join(' / ')
-        processedResults = results.map((result) => {
-          result[3] = label
-          return result
-        })
-        break
-      default:
-        processedResults = results
-        break
-    }
-
     Object.assign(this.reportFields, {
-      resultsRaw: JSON.stringify(processedResults),
+      resultsRaw: JSON.stringify(results),
       fightLength: metas.fightLength,
       fightLengthVariation: metas.fightLengthVariation,
       targetError: metas.targetError,
@@ -127,76 +86,7 @@ export class ReportTransformer {
     const { fightStyle, simulationType, spec, tier, wowClass } = this.reportFields
     const { results } = this.extraFields
 
-    // Generate AzeriteForge & AzeritePowerWeights Import String
-    switch (simulationType) {
-      case 'azerite-levels':
-      case 'azerite-stacks':
-        // Build the powers arrays
-        const afPowers = [] // AzeriteForge (AF)
-        const apwPowers = [] // AzeritePowerWeights (APW)
-        for (let i = 1; i < results.length; i++) {
-          const value = results[i]
-          const parts = value.shift().split('--') // Split up the variations, those aren't supported by the addons atm
-          const spellNames = parts[0].split(' / ') // Some labels are concatened, like the Alliance / Horde one, we always take the first one
-          if (!parts[1]) {
-            // Insert each power (powerId and meanDPS)
-            for (const spellName of spellNames) {
-              const azeriteInformation = getAzeriteInformationByName(spellName)
-              if (!azeriteInformation) continue
-              const { powerId } = azeriteInformation
-
-              // Use actual values for AzeriteForge
-              const afWeights = []
-              for (let j = 1; j < results[0].length; j++) {
-                afWeights.push(`${results[0][j]}:${value[j - 1]}`)
-              }
-              const afString = `[${powerId}]${afWeights.join(',')},^`
-              let existingIdx = afPowers.findIndex(item => item.includes(`[${powerId}]`))
-              if (existingIdx < 0) {
-                afPowers.push(afString)
-              } else if (parts[1] && parts[1].includes('talents:')) {
-                afPowers[existingIdx] = afString
-              }
-
-              // Calculate mean DPS for AzeritePowerWeights
-              const totalDPS = value.reduce((accumulator, currentValue) => accumulator + currentValue)
-              const meanDPS = totalDPS / value.length
-              existingIdx = apwPowers.findIndex(item => item.powerId === powerId)
-              if (existingIdx < 0) {
-                apwPowers.push({ powerId, meanDPS })
-              } else if (parts[1] && parts[1].includes('talents:')) {
-                apwPowers[existingIdx].meanDPS = meanDPS
-              }
-            }
-          }
-        }
-
-        const { classId, specId } = getWowClassIdAndSpecId(wowClass, spec)
-
-        // Create the import string for AzeriteForge
-        const afWeightsString = `AZFORGE:${classId}:${specId}^${afPowers.join('')}`
-
-        // Create the import string for AzeritePowerWeights
-        apwPowers.sort((a, b) => b.meanDPS - a.meanDPS) // Descending sort using meanDPS
-        // Compute the weights
-        const bestPower = apwPowers[0]
-        bestPower.weight = 10 // Defined by the addon as reference
-        for (let i = 1; i < apwPowers.length; i++) {
-          // Compute the weight relatively to the best power
-          const power = apwPowers[i]
-          power.weight = (power.meanDPS / bestPower.meanDPS * bestPower.weight).toFixed(2)
-        }
-        const apwWeights = apwPowers.map(({ powerId, weight }) => `${powerId}=${weight}`)
-        const apwWeightsName = `herodamage.com - ${simulationType === 'azeritelevels' ? 'Levels' : 'Stacks'}_${fightStyle.toUpperCase()}_${tier.toUpperCase()}`
-        const apwWeightsString = `( AzeritePowerWeights:2:"${apwWeightsName}":${classId}:${specId}: ${apwWeights.join(', ')}: )`
-
-        // Save them
-        Object.assign(this.reportFields, {
-          azeriteForgeWeights: afWeightsString,
-          azeritePowerWeights: apwWeightsString
-        })
-        break
-    }
+    // TODO: Generate MoreTooltipInfo Import String
   }
 
   registerPagesDetails () {

@@ -2,7 +2,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { getAzeriteClassName } from '../../../utils/wow/ui'
 // Components
 import { Trans } from '@lingui/react'
 import Divider from '@material-ui/core/Divider'
@@ -25,23 +24,13 @@ const Talent = styled(Grid)`
   }
 `
 
-const AzeritePower = styled(Grid)`
-  && {
-    opacity: ${({ selected }) => selected ? '1' : '0.5'};
-  }
-`
-
 class Filters extends React.Component {
-  createAzeritePowerSelectHandler (azeritePower) {
-    return (event) => { this.props.onAzeritePowerSelect(event, azeritePower) }
-  }
-
   createTalentSelectHandler (rowId, colId) {
     return (event) => { this.props.onTalentSelect(event, rowId, colId) }
   }
 
   render () {
-    const { name, azeritePowersFilter, talentsTree, wowheadLink } = this.props
+    const { name, talentsTree, wowheadLink } = this.props
     return (
       <Grid item xs={12}>
         <ExpansionPanel defaultExpanded elevation={1}>
@@ -64,19 +53,6 @@ class Filters extends React.Component {
                   </Grid>
                 ))}
               </div>
-              <Grid container spacing={8} style={{ width: '185px' }}>
-                {Object.values(azeritePowersFilter).map((azeritePower) => {
-                  const { selected, spellName, spellId, tier, classesId } = azeritePower
-                  return (
-                    <AzeritePower item key={`${name}-${spellName}`} xs={12} selected={selected}
-                      onClick={this.createAzeritePowerSelectHandler(spellName)}>
-                      <a href={`${wowheadLink}spell=${spellId}`} className={getAzeriteClassName(tier, classesId)}>
-                        <span>{spellName}</span>
-                      </a>
-                    </AzeritePower>
-                  )
-                })}
-              </Grid>
             </Container>
           </ExpansionPanelDetails>
         </ExpansionPanel>
@@ -87,9 +63,7 @@ class Filters extends React.Component {
 
 Filters.propTypes = {
   name: PropTypes.string.isRequired,
-  onAzeritePowerSelect: PropTypes.func.isRequired,
   onTalentSelect: PropTypes.func.isRequired,
-  azeritePowersFilter: PropTypes.object.isRequired,
   talentsTree: PropTypes.object.isRequired,
   wowheadLink: PropTypes.string.isRequired
 }

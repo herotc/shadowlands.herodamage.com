@@ -70,40 +70,10 @@ const styles = (theme) => ({
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
-        '&.azerite-tier2': {
-          color: '#9ccc65'
-        },
-        '&.azerite-tier3-generic': {
-          color: '#29b6f6'
-        },
-        '&.azerite-tier3-specific': {
-          color: '#ff7043'
-        },
-        '&.azerite-essence-major': {
-          color: '#70d5ff'
-        },
-        '&.azerite-essence-minor': {
-          color: '#8788ee'
-        }
       }
     },
     '& .whlink-icon-only > span': {
       display: 'none'
-    },
-    '& .azerite-tier2': {
-      color: '#9ccc65'
-    },
-    '& .azerite-tier3-generic': {
-      color: '#29b6f6'
-    },
-    '& .azerite-tier3-specific': {
-      color: '#ff7043'
-    },
-    '& .azerite-essence-major': {
-      color: '#70d5ff'
-    },
-    '& .azerite-essence-minor': {
-      color: '#8788ee'
     },
     '& #chart-overlay': {
       width: '2px',

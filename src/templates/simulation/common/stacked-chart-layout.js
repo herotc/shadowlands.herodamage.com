@@ -22,7 +22,7 @@ class StackedChartLayout extends React.Component {
   render () {
     const { children, data, i18nPlugin, pageContext } = this.props
     const { t } = i18nPlugin
-    const { azeriteForgeWeights, azeritePowerWeights, fightStyle, fightLength, fightLengthVariation, name, simcBuildTimestamp, simcGitRevision, simulationFeaturedOrder, simulationCategory, simulationType, spec, targetError, templateGear, templateTalents, templateDPS, tier, variation, wowClass, wowVersion } = pageContext
+    const { fightStyle, fightLength, fightLengthVariation, name, simcBuildTimestamp, simcGitRevision, simulationFeaturedOrder, simulationCategory, simulationType, spec, targetError, templateGear, templateTalents, templateDPS, tier, variation, wowClass, wowVersion } = pageContext
     return (
       <div>
         <h1>{startCase(simulationType)} {toUpper(fightStyle)} {toUpper(tier)} {getSpecWithVariation(t, spec, variation)} {startCase(t(wowClass))}</h1>
@@ -35,26 +35,6 @@ class StackedChartLayout extends React.Component {
           simcGitRevision={simcGitRevision} targetError={targetError} templateGear={templateGear}
           templateTalents={templateTalents} templateDPS={templateDPS} wowClass={wowClass}
           wowVersion={wowVersion}/>
-        {azeriteForgeWeights &&
-        <CopyBox elementId="azerite-forge-weights" text={azeriteForgeWeights}
-          title="AzeriteForge Import String"/>}
-        {azeritePowerWeights &&
-        <CopyBox elementId="azerite-power-weights" text={azeritePowerWeights}
-          title="AzeritePowerWeights Import String"/>}
-        {simulationType.includes('azerite') &&
-        <p style={{ textAlign: 'center' }}>
-          <span className={'azerite-tier3-specific'}>Outer Ring (Spec Specific)</span>
-          &nbsp;|&nbsp;
-          <span className={'azerite-tier3-generic'}>Outer Ring (Generic)</span>
-          &nbsp;|&nbsp;
-          <span className={'azerite-tier2'}>Inner Ring</span>
-        </p>}
-        {simulationType.includes('essences') &&
-        <p style={{ textAlign: 'center' }}>
-          <span className={'azerite-essence-major'}>Major + Minor</span>
-          &nbsp;|&nbsp;
-          <span className={'azerite-essence-minor'}>Minor</span>
-        </p>}
         <CircularProgress id="results-loader" color="secondary"/>
         <div id="chart-overlay"/>
         <div id="google-chart-labels"/>
