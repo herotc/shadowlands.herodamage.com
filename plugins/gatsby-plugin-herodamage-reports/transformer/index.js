@@ -159,27 +159,27 @@ export class ReportTransformer {
     }
 
     // SimC Performance
-    // for (const simulationName of simulationsName) {
-    //   for (const fightStyle of fightStyles) {
-    //     for (const tier of tiers) {
-    //       const { simulationFeaturedOrder, simulationCategory, simulationType, simulationTypeOrder } = mapping.simulationDetails[simulationName]
-    //       const slug = `/simc-performance/${simulationType}/${fightStyle}-${tier}`
-    //       createPage({
-    //         path: slug,
-    //         component: resolve('./src/templates/simc-performance.js'),
-    //         context: {
-    //           slug,
-    //           simulationFeaturedOrder,
-    //           simulationCategory,
-    //           simulationType,
-    //           simulationTypeOrder,
-    //           fightStyle,
-    //           tier
-    //         }
-    //       })
-    //     }
-    //   }
-    // }
+    for (const simulationName of simulationsName) {
+      for (const fightStyle of fightStyles) {
+        for (const tier of tiers) {
+          const { simulationFeaturedOrder, simulationCategory, simulationType, simulationTypeOrder } = mapping.simulationDetails[simulationName]
+          const slug = `/simc-performance/${simulationType}/${fightStyle}-${tier}`
+          createPage({
+            path: slug,
+            component: resolve('./src/templates/simc-performance.js'),
+            context: {
+              slug,
+              simulationFeaturedOrder,
+              simulationCategory,
+              simulationType,
+              simulationTypeOrder,
+              fightStyle,
+              tier
+            }
+          })
+        }
+      }
+    }
 
     // Simulations
     const result = await graphql(`

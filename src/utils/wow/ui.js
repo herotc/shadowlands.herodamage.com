@@ -1,5 +1,6 @@
 // Dependencies
 import {
+  getLegendaryInformation,
   getTalentsMappingDifference,
   getTalentsTree,
   getTrinketInformation
@@ -122,6 +123,48 @@ export function getWowheadLink (lang) {
 
 /**
  *
+ * @param rawLegendaryName
+ * @param wowClass
+ * @param spec
+ * @param templateTalentsMapping
+ * @param lang
+ * @param container
+ * @returns {string}
+ */
+export function wowLegendaryLabel (rawLegendaryName, wowClass, spec, templateTalentsMapping, lang = defaultLang, container = true) {
+  // Split up the variations
+  const parts = rawLegendaryName.split('--')
+  const legendary = getLegendaryInformation(parts[0].split(' (')[0])
+  if (!legendary) return (container && `<div class="label-container">${rawLegendaryName}</div>`) || `${rawLegendaryName}`
+
+  const { spellId } = legendary
+  let label = `<a href="${getWowheadLink(lang)}spell=${spellId}">
+      <span>${rawLegendaryName}</span>
+    </a>`
+  const variant = parts[0].split(' (')[1]
+  if (variant) label += `&nbsp;(${variant}`
+  // Add back the formatted variations
+  if (parts[1]) {
+    const variations = parts[1].split(';')
+    const variationStrings = []
+    for (const variation of variations) {
+      const parts = variation.split(':')
+      const variationName = parts[0]
+      const variationValue = parts[1]
+      switch (variationName) {
+        case 'talents':
+          const talents = getTalentsMappingDifference(templateTalentsMapping, variationValue)
+          variationStrings.push(`${wowTalentsLabel(talents, wowClass, spec, lang)}`)
+          break
+      }
+    }
+    label += `&nbsp;|&nbsp;${variationStrings.join(' - ')}`
+  }
+  return (container && `<div class="label-container">${label}</div>`) || `${label}`
+}
+
+/**
+ *
  * @param rawName
  * @param wowClass
  * @param spec
@@ -135,6 +178,41 @@ export function wowRaceLabel (rawName, wowClass, spec, templateTalentsMapping, l
   const parts = rawName.split('--')
 
   let label = `${parts[0]}`
+  // Add back the formatted variations
+  if (parts[1]) {
+    const variations = parts[1].split(';')
+    const variationStrings = []
+    for (const variation of variations) {
+      const parts = variation.split(':')
+      const variationName = parts[0]
+      const variationValue = parts[1]
+      switch (variationName) {
+        case 'talents':
+          const talents = getTalentsMappingDifference(templateTalentsMapping, variationValue)
+          variationStrings.push(`${wowTalentsLabel(talents, wowClass, spec, lang)}`)
+          break
+      }
+    }
+    label += `&nbsp;|&nbsp;${variationStrings.join(' - ')}`
+  }
+  return (container && `<div class="label-container">${label}</div>`) || `${label}`
+}
+
+/**
+ *
+ * @param rawSoulbindName
+ * @param wowClass
+ * @param spec
+ * @param templateTalentsMapping
+ * @param lang
+ * @param container
+ * @returns {string}
+ */
+export function wowSoulbindLabel (rawSoulbindName, wowClass, spec, templateTalentsMapping, lang = defaultLang, container = true) {
+  // Split up the variations
+  const parts = rawSoulbindName.split('--')
+  let label = `${rawSoulbindName}`
+
   // Add back the formatted variations
   if (parts[1]) {
     const variations = parts[1].split(';')

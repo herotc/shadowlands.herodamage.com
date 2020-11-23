@@ -1,4 +1,5 @@
 import ClassSpec from '../../assets/wow-data/ClassSpec.json'
+import Legendaries from '../../assets/wow-data/Legendaries.json'
 import Talents from '../../assets/wow-data/Talent.json'
 import Trinkets from '../../assets/wow-data/Trinket.json'
 
@@ -72,6 +73,15 @@ export function getTalentsMappingDifference (mappingA, mappingB) {
     mapping += columnA === columnB ? '0' : columnB
   }
   return mapping
+}
+
+/**
+ *
+ * @param legendaryName
+ * @returns {*}
+ */
+export function getLegendaryInformation (legendaryName) {
+  return Legendaries[legendaryName]
 }
 
 /**

@@ -7,7 +7,6 @@ import startCase from 'lodash/startCase'
 import { getSpecWithVariation } from '../../../utils/wow/ui'
 // Components
 import CircularProgress from '@material-ui/core/CircularProgress'
-import CopyBox from '../../../components/copy-box'
 import Related from './related'
 import Metas from './metas'
 

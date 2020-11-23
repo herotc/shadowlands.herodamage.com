@@ -2,7 +2,9 @@ import load from 'little-loader'
 
 import {
   refreshWowheadLinks,
+  wowLegendaryLabel,
   wowRaceLabel,
+  wowSoulbindLabel,
   wowTrinketLabel
 } from '../../utils/wow/ui'
 import { excludeEmptyRows, formatNumber, initOverlay, removeLoading } from './common'
@@ -129,13 +131,30 @@ function processData (simulationType, data, wowClass, spec, talentsMapping, temp
   // Remove labels from data to add interactive ones in HTML
   const labels = []
   switch (simulationType) {
-    case 'trinkets':
+    case 'legendaries': {
+      for (let row = 0; row < data.getNumberOfRows(); row++) {
+        const wowLabel = data.getValue(row, 0)
+        labels.push(wowLegendaryLabel(wowLabel, wowClass, spec, talentsMapping, lang))
+        data.setValue(row, 0, '')
+      }
+      break
+    }
+    case 'soulbinds': {
+      for (let row = 0; row < data.getNumberOfRows(); row++) {
+        const wowLabel = data.getValue(row, 0)
+        labels.push(wowSoulbindLabel(wowLabel, wowClass, spec, talentsMapping, lang))
+        data.setValue(row, 0, '')
+      }
+      break
+    }
+    case 'trinkets': {
       for (let row = 0; row < data.getNumberOfRows(); row++) {
         const wowLabel = data.getValue(row, 0)
         labels.push(wowTrinketLabel(wowLabel, wowClass, spec, talentsMapping, lang))
         data.setValue(row, 0, '')
       }
       break
+    }
   }
   const interactiveLabels = document.getElementById('google-chart-labels')
   for (let label of labels) {
@@ -174,11 +193,14 @@ export async function stackedChart (pageContext, chartTitle, lang) {
     // Process data
     let rawDataProcessed
     switch (simulationType) {
-      case 'races':
+      case 'races': {
         rawDataProcessed = processRacesData(rawData, wowClass, spec, talentsMapping, templateDPS, lang)
         break
-      case 'trinkets':
+      }
+      default: {
         rawDataProcessed = processData(simulationType, rawData, wowClass, spec, talentsMapping, templateDPS, lang)
+        break
+      }
     }
     refreshWowheadLinks()
     const { data, maxDPS } = rawDataProcessed
@@ -189,18 +211,20 @@ export async function stackedChart (pageContext, chartTitle, lang) {
     const maxPercentageGainHAxis = maxPercentageGain % 2 === 0 ? maxPercentageGain : maxPercentageGain + 1
     const hAxisStacks = []
     switch (simulationType) {
-      case 'races':
+      case 'races': {
         // A gridline every 0.5%
         for (let i = 1; i <= maxPercentageGainHAxis * 2; i++) {
           hAxisStacks.push(i * 0.5)
         }
         break
-      case 'trinkets':
+      }
+      default: {
         // A gridline every 2%
         for (let i = 1; i <= maxPercentageGainHAxis / 2; i++) {
           hAxisStacks.push(i * 2)
         }
         break
+      }
     }
 
     // Get content width (to force a min-width on mobile, can't do it in css because of the overflow)

@@ -46,7 +46,8 @@ const SpecsList = ({ classes, i18nPlugin, specs }) => {
         {index > 0 && <Divider/>}
         <ListItem button component={Link} to={path} className={classes.name}>
           <Typography>
-            {getSpecWithVariation(t, spec, variation)}
+            {/* FIXME: Hacky check for Kyrian covenant to remove it from variation */}
+            {getSpecWithVariation(t, spec, variation === 'kyrian' ? '' : variation)}
             <span><DateFormat value={buildDate} format={{ month: 'short', day: '2-digit' }}/></span>
           </Typography>
         </ListItem>
@@ -81,10 +82,13 @@ const TiersList = (props) => {
 
 const WowClassTemplate = (props) => {
   const { data, i18nPlugin } = props
-  const { allSitePage: { group: simulationTypes } } = data
+  const { soulbindSimulations, otherSimulations } = data
   const { t } = i18nPlugin
-  const { wowClass } = simulationTypes[0].edges[0].node.context
+
+  const simulations = soulbindSimulations ? [...soulbindSimulations.group, ...otherSimulations.group] : otherSimulations
+  const { wowClass } = simulations[1].edges[0].node.context
   const pageTitle = startCase(t(wowClass))
+
   return (
     <div>
       <Helmet title={`${pageTitle} | ${data.site.siteMetadata.title}`}/>
@@ -94,7 +98,7 @@ const WowClassTemplate = (props) => {
         in their respective pages. They are updated on a daily basis.</Trans></p>
       <Grid container spacing={16}>
         {
-          simulationTypes
+          simulations
             .sort((a, b) => a.edges[0].node.context.simulationFeaturedOrder - b.edges[0].node.context.simulationFeaturedOrder)
             .map((group, index) => {
               const { simulationCategory } = group.edges[0].node.context
@@ -129,7 +133,27 @@ export const query = graphql`
         title
       }
     }
-    allSitePage(filter: {context: {lang: {eq: $lang}, wowClass: {eq: $wowClass}, simulationFeaturedOrder: {ne: null}, simulationType: {ne: null}, fightStyle: {eq: "1t"}, variation: {eq: ""}}}, sort: {fields: [context___spec, context___variation], order: ASC}) {
+    soulbindSimulations: allSitePage(filter: {context: {lang: {eq: $lang}, wowClass: {eq: $wowClass}, simulationFeaturedOrder: {ne: null}, simulationType: {ne: null}, fightStyle: {eq: "1t"}, variation: {eq: "kyrian"}}}, sort: {fields: [context___spec, context___variation], order: ASC}) {
+      group(field: context___simulationType) {
+        edges {
+          node {
+            id
+            path
+            context {
+              wowClass
+              simulationFeaturedOrder
+              simulationCategory
+              simulationType
+              tier
+              spec
+              variation
+              simcBuildTimestamp
+            }
+          }
+        }
+      }
+    }
+    otherSimulations: allSitePage(filter: {context: {lang: {eq: $lang}, wowClass: {eq: $wowClass}, simulationFeaturedOrder: {ne: null}, simulationType: {ne: null}, fightStyle: {eq: "1t"}, variation: {eq: ""}}}, sort: {fields: [context___spec, context___variation], order: ASC}) {
       group(field: context___simulationType) {
         edges {
           node {
