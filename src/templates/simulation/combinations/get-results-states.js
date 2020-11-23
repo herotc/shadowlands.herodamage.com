@@ -3,24 +3,17 @@ import merge from 'lodash/merge'
 import { getTalentsTree } from '../../../utils/wow/core'
 import { wowTalentsLabel } from '../../../utils/wow/ui'
 
-function getStacksCount (simulationType) {
-  if (simulationType === 'combinations-default') return 1
-  return parseInt(simulationType.split('-')[1].charAt(0))
-}
-
 export function getResultsStates (props) {
   const { i18nPlugin: { lang }, pageContext } = props
   const { resultsRaw, spec, wowClass, simulationType } = pageContext
 
   const jsonResults = JSON.parse(resultsRaw)
-  const stacksCount = getStacksCount(simulationType)
 
   // Iterate over the results to add some information
   const results = []
   const multiTargets = jsonResults[0].length === 6 // whether the results contains a bossDPS column
   const maxDPS = jsonResults[0][4] // used to compute the % Diff
   const selectedTalents = {} // used for talents filter
-  const labelsFilter = {} // used for labels filter
   for (let row of jsonResults) {
     // result filtering
     const rawTalentLabels = row[1]

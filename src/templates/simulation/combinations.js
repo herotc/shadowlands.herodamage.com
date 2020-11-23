@@ -142,7 +142,7 @@ class CombinationsSimulationTemplate extends React.Component {
                   <TableRow key={`${name}-${result.rank}`} hover>
                     <TableCell component="th" scope="row" numeric>{result.rank}</TableCell>
                     <TableCell dangerouslySetInnerHTML={{ __html: result.talentsLabel }} />
-                    <TableCell dangerouslySetInnerHTML={{ __html: result.label }} />
+                    <TableCell dangerouslySetInnerHTML={{ __html: result.labels }} />
                     <TableCell numeric>{result.dps}</TableCell>
                     {multiTargets && <TableCell numeric>{result.bossDPS}</TableCell>}
                     <TableCell numeric>{result.dpsPercentageDifference}</TableCell>
