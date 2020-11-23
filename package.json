@@ -1,0 +1,113 @@
+{
+  "name": "herodamage-shadowlands-prepatch",
+  "version": "0.0.1",
+  "description": "Shadowlands PrePatch (9.0) version of HeroDamage",
+  "keywords": [
+    "herotc",
+    "herodamage",
+    "world of warcraft",
+    "shadowlands prepatch",
+    "wow sl prepatch",
+    "theorycrafting",
+    "simulationcraft",
+    "simc",
+    "gatsby"
+  ],
+  "homepage": "https://www.herodamage.com/",
+  "bugs": {
+    "url": "https://github.com/herotc/shadowlands-prepatch.herodamage.com/issues"
+  },
+  "license": "EUPL-1.2",
+  "author": {
+    "name": "HeroTC",
+    "email": "contact@hero.tc",
+    "url": "https://www.hero.tc/"
+  },
+  "contributors": [
+    {
+      "name": "Quentin Giraud",
+      "email": "dev@aethys.io",
+      "url": "https://quentin.giraud.pro/"
+    },
+    {
+      "name": "Florian Meißner",
+      "email": "developer@mystler.eu",
+      "url": "https://www.mystler.eu/"
+    },
+    {
+      "name": "Océane Skowronski",
+      "email": "dev.oceaneskow@gmail.com",
+      "url": "https://nianel.github.io/CV/"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/herotc/shadowlands-prepatch.herodamage.com.git"
+  },
+  "scripts": {
+    "postinstall": "cd scripts/i18n && npm install",
+    "clear": "shx rm -rf public/* && shx rm -rf .cache",
+    "reinstall": "npm run clear && shx rm -rf scripts/i18n/node_modules && shx rm -rf node_modules && npm install",
+    "start": "npm run develop",
+    "develop": "npm run clear && cross-env NODE_OPTIONS=\"--max_old_space_size=3072 -r esm\" gatsby develop",
+    "build": "npm run clear && cross-env NODE_OPTIONS=\"--max_old_space_size=3072 -r esm\" gatsby build",
+    "serve": "gatsby serve",
+    "dbc": "node -r esm scripts/dbc",
+    "i18n": "cd scripts/i18n && npm start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@lingui/react": "2.9.2",
+    "@material-ui/core": "3.9.4",
+    "@material-ui/icons": "3.0.2",
+    "esm": "3.2.25",
+    "gatsby": "2.24.68",
+    "gatsby-plugin-google-analytics": "2.3.16",
+    "gatsby-plugin-no-sourcemaps": "2.2.1",
+    "gatsby-plugin-react-helmet": "3.3.13",
+    "gatsby-plugin-styled-components": "3.3.13",
+    "gatsby-source-filesystem": "2.3.33",
+    "gatsby-transformer-remark": "2.8.38",
+    "jss": "9.8.7",
+    "little-loader": "0.2.0",
+    "lodash": "4.17.20",
+    "prop-types": "15.7.2",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-google-charts": "3.0.15",
+    "react-helmet": "5.2.1",
+    "react-jss": "8.6.1",
+    "react-timeago": "4.4.0",
+    "styled-components": "4.4.1"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-optional-chaining": "7.11.0",
+    "@lingui/babel-preset-react": "2.9.2",
+    "babel-eslint": "10.1.0",
+    "babel-plugin-styled-components": "1.11.1",
+    "cross-env": "7.0.2",
+    "eslint": "5.16.0",
+    "eslint-config-standard": "12.0.0",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-node": "8.0.1",
+    "eslint-plugin-promise": "4.2.1",
+    "eslint-plugin-react": "7.21.3",
+    "eslint-plugin-standard": "4.0.1",
+    "shx": "0.3.2"
+  },
+  "engines": {
+    "node": "12.18.4",
+    "npm": "6.14.8"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 Chrome versions",
+    "last 2 Edge versions",
+    "last 2 Firefox versions",
+    "last 2 Opera versions",
+    "last 2 Safari versions",
+    "last 2 ChromeAndroid versions",
+    "last 2 FirefoxAndroid versions",
+    "last 2 iOS versions"
+  ]
+}
