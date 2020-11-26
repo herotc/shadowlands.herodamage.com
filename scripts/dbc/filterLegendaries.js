@@ -3,11 +3,11 @@ import LegendariesRaw from '../../src/assets/wow-data/raw/Legendaries.json'
 
 export function filterLegendaries () {
   const legendariesSorted = LegendariesRaw.sort((a, b) => a.legendaryName.localeCompare(b.legendaryName))
-  const legendaries = {}
+  const legendariesByName = {}
   for (const legendary of legendariesSorted) {
     const { legendaryName: name, legendarySpellID: spellId } = legendary
-    if (!legendaries[name]) legendaries[name] = { spellId }
+    if (!legendariesByName[name]) legendariesByName[name] = { spellId }
   }
 
-  writeFile('src/assets/wow-data/Legendaries.json', JSON.stringify(legendaries), (err) => { if (err) console.err(err) })
+  writeFile('src/assets/wow-data/Legendaries.json', JSON.stringify(legendariesByName), (err) => { if (err) console.err(err) })
 }

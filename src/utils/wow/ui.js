@@ -1,6 +1,7 @@
 // Dependencies
 import {
   getLegendaryInformation,
+  getSoulbindInformation,
   getTalentsMappingDifference,
   getTalentsTree,
   getTrinketInformation
@@ -135,12 +136,17 @@ export function wowLegendaryLabel (rawLegendaryName, wowClass, spec, templateTal
   // Split up the variations
   const parts = rawLegendaryName.split('--')
   const legendary = getLegendaryInformation(parts[0].split(' (')[0])
-  if (!legendary) return (container && `<div class="label-container">${rawLegendaryName}</div>`) || `${rawLegendaryName}`
 
-  const { spellId } = legendary
-  let label = `<a href="${getWowheadLink(lang)}spell=${spellId}">
-      <span>${rawLegendaryName}</span>
+  let label
+  if (legendary) {
+    const { spellId } = legendary
+    label = `<a href="${getWowheadLink(lang)}spell=${spellId}">
+      <span>${parts[0]}</span>
     </a>`
+  } else {
+    label = `${parts[0]}`
+  }
+
   const variant = parts[0].split(' (')[1]
   if (variant) label += `&nbsp;(${variant}`
   // Add back the formatted variations
@@ -160,6 +166,7 @@ export function wowLegendaryLabel (rawLegendaryName, wowClass, spec, templateTal
     }
     label += `&nbsp;|&nbsp;${variationStrings.join(' - ')}`
   }
+
   return (container && `<div class="label-container">${label}</div>`) || `${label}`
 }
 
@@ -211,48 +218,18 @@ export function wowRaceLabel (rawName, wowClass, spec, templateTalentsMapping, l
 export function wowSoulbindLabel (rawSoulbindName, wowClass, spec, templateTalentsMapping, lang = defaultLang, container = true) {
   // Split up the variations
   const parts = rawSoulbindName.split('--')
-  let label = `${rawSoulbindName}`
+  const soulbind = getSoulbindInformation(parts[0].split(' (')[0])
 
-  // Add back the formatted variations
-  if (parts[1]) {
-    const variations = parts[1].split(';')
-    const variationStrings = []
-    for (const variation of variations) {
-      const parts = variation.split(':')
-      const variationName = parts[0]
-      const variationValue = parts[1]
-      switch (variationName) {
-        case 'talents':
-          const talents = getTalentsMappingDifference(templateTalentsMapping, variationValue)
-          variationStrings.push(`${wowTalentsLabel(talents, wowClass, spec, lang)}`)
-          break
-      }
-    }
-    label += `&nbsp;|&nbsp;${variationStrings.join(' - ')}`
-  }
-  return (container && `<div class="label-container">${label}</div>`) || `${label}`
-}
-
-/**
- *
- * @param rawItemName
- * @param wowClass
- * @param spec
- * @param templateTalentsMapping
- * @param lang
- * @param container
- * @returns {string}
- */
-export function wowTrinketLabel (rawItemName, wowClass, spec, templateTalentsMapping, lang = defaultLang, container = true) {
-  // Split up the variations
-  const parts = rawItemName.split('--')
-  const trinket = getTrinketInformation(parts[0].split(' (')[0])
-  if (!trinket) return (container && `<div class="label-container">${rawItemName}</div>`) || `${rawItemName}`
-
-  const { itemId } = trinket
-  let label = `<a href="${getWowheadLink(lang)}item=${itemId}">
-      <span>${rawItemName}</span>
+  let label
+  if (soulbind) {
+    const { spellId } = soulbind
+    label = `<a href="${getWowheadLink(lang)}spell=${spellId}">
+      <span>${parts[0]}</span>
     </a>`
+  } else {
+    label = `${parts[0]}`
+  }
+
   const variant = parts[0].split(' (')[1]
   if (variant) label += `&nbsp;(${variant}`
   // Add back the formatted variations
@@ -272,6 +249,55 @@ export function wowTrinketLabel (rawItemName, wowClass, spec, templateTalentsMap
     }
     label += `&nbsp;|&nbsp;${variationStrings.join(' - ')}`
   }
+
+  return (container && `<div class="label-container">${label}</div>`) || `${label}`
+}
+
+/**
+ *
+ * @param rawItemName
+ * @param wowClass
+ * @param spec
+ * @param templateTalentsMapping
+ * @param lang
+ * @param container
+ * @returns {string}
+ */
+export function wowTrinketLabel (rawItemName, wowClass, spec, templateTalentsMapping, lang = defaultLang, container = true) {
+  // Split up the variations
+  const parts = rawItemName.split('--')
+  const trinket = getTrinketInformation(parts[0].split(' (')[0])
+
+  let label
+  if (!trinket) {
+    const { itemId } = trinket
+    label = `<a href="${getWowheadLink(lang)}item=${itemId}">
+      <span>${parts[0]}</span>
+    </a>`
+  } else {
+    label = `${parts[0]}`
+  }
+
+  const variant = parts[0].split(' (')[1]
+  if (variant) label += `&nbsp;(${variant}`
+  // Add back the formatted variations
+  if (parts[1]) {
+    const variations = parts[1].split(';')
+    const variationStrings = []
+    for (const variation of variations) {
+      const parts = variation.split(':')
+      const variationName = parts[0]
+      const variationValue = parts[1]
+      switch (variationName) {
+        case 'talents':
+          const talents = getTalentsMappingDifference(templateTalentsMapping, variationValue)
+          variationStrings.push(`${wowTalentsLabel(talents, wowClass, spec, lang)}`)
+          break
+      }
+    }
+    label += `&nbsp;|&nbsp;${variationStrings.join(' - ')}`
+  }
+
   return (container && `<div class="label-container">${label}</div>`) || `${label}`
 }
 

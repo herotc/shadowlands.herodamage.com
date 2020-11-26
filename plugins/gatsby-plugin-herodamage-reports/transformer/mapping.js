@@ -10,13 +10,13 @@ export const simulationDetails = {
     simulationCategory: 'combinations',
     simulationType: 'combinations-2c',
     simulationTypeOrder: 11,
-    simulationTemplate: 'combinations'
+    simulationTemplate: 'combinations-soulbinds'
   },
   'combinator-1l': {
     simulationCategory: 'combinations',
     simulationType: 'combinations-1l',
     simulationTypeOrder: 12,
-    simulationTemplate: 'combinations'
+    simulationTemplate: 'combinations-soulbinds'
   },
   legendarysimulation: {
     simulationFeaturedOrder: 2,

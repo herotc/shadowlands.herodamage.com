@@ -1,5 +1,6 @@
 import ClassSpec from '../../assets/wow-data/ClassSpec.json'
 import Legendaries from '../../assets/wow-data/Legendaries.json'
+import Soulbinds from '../../assets/wow-data/Soulbinds.json'
 import Talents from '../../assets/wow-data/Talent.json'
 import Trinkets from '../../assets/wow-data/Trinket.json'
 
@@ -32,6 +33,24 @@ export function getWowClassIdAndSpecId (wowClass, spec) {
   const classId = classSpec.classId
   const specId = classSpec.specIds[spec]
   return { classId, specId }
+}
+
+/**
+ *
+ * @param legendaryName
+ * @returns {*}
+ */
+export function getLegendaryInformation (legendaryName) {
+  return Legendaries[legendaryName]
+}
+
+/**
+ *
+ * @param soulbindName
+ * @returns {*}
+ */
+export function getSoulbindInformation (soulbindName) {
+  return Soulbinds[soulbindName]
 }
 
 /**
@@ -73,15 +92,6 @@ export function getTalentsMappingDifference (mappingA, mappingB) {
     mapping += columnA === columnB ? '0' : columnB
   }
   return mapping
-}
-
-/**
- *
- * @param legendaryName
- * @returns {*}
- */
-export function getLegendaryInformation (legendaryName) {
-  return Legendaries[legendaryName]
 }
 
 /**

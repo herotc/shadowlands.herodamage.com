@@ -85,7 +85,7 @@ const WowClassTemplate = (props) => {
   const { soulbindSimulations, otherSimulations } = data
   const { t } = i18nPlugin
 
-  const simulations = soulbindSimulations ? [...soulbindSimulations.group, ...otherSimulations.group] : otherSimulations
+  const simulations = [...soulbindSimulations.group, ...otherSimulations.group]
   const { wowClass } = simulations[1].edges[0].node.context
   const pageTitle = startCase(t(wowClass))
 

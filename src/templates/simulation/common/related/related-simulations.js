@@ -6,12 +6,14 @@ import { Link } from 'gatsby'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 
-const RelatedSimulations = ({ data: { relatedSimulations }, simulationFeaturedOrder, simulationCategory, simulationType, t }) => {
-  if (!relatedSimulations || relatedSimulations.edges.length <= 1) return null
-  const relatedSimulationCategories = relatedSimulations.edges.filter((edge) => {
+const RelatedSimulations = ({ data: { soulbindSimulations, relatedSimulations }, simulationFeaturedOrder, simulationCategory, simulationType, t }) => {
+  const simulations = { edges: [...soulbindSimulations.edges, ...relatedSimulations.edges] }
+  if (simulations.edges.length <= 1) return null
+
+  const relatedSimulationCategories = simulations.edges.filter((edge) => {
     return !!edge.node.context.simulationFeaturedOrder
   })
-  const relatedSimulationTypes = relatedSimulations.edges.filter((edge) => {
+  const relatedSimulationTypes = simulations.edges.filter((edge) => {
     return edge.node.context.simulationCategory === simulationCategory
   })
   return (

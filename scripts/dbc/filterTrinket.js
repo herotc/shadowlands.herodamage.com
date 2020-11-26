@@ -2,12 +2,12 @@ import { writeFile } from 'fs'
 import TrinketRaw from '../../src/assets/wow-data/raw/Trinket.json'
 
 export function filterTrinket () {
-  const TrinketSorted = TrinketRaw.sort((a, b) => a.name.localeCompare(b.name))
-  const Trinkets = {}
-  for (const trinket of TrinketSorted) {
+  const trinketsSorted = TrinketRaw.sort((a, b) => a.name.localeCompare(b.name))
+  const trinketsByName = {}
+  for (const trinket of trinketsSorted) {
     const { name, itemId } = trinket
-    if (!Trinkets[name]) Trinkets[name] = { itemId }
+    if (!trinketsByName[name]) trinketsByName[name] = { itemId }
   }
 
-  writeFile('src/assets/wow-data/Trinket.json', JSON.stringify(Trinkets), (err) => { if (err) console.err(err) })
+  writeFile('src/assets/wow-data/Trinket.json', JSON.stringify(trinketsByName), (err) => { if (err) console.err(err) })
 }

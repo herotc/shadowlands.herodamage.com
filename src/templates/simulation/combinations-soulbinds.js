@@ -19,7 +19,7 @@ import Metas from './common/metas'
 import Filters from './combinations/filters'
 import EnhancedTableHead from './combinations/enhanced-table-head'
 
-class CombinationsSimulationTemplate extends React.Component {
+class CombinationsSoulbindsSimulationTemplate extends React.Component {
   constructor (props) {
     super(props)
 
@@ -162,17 +162,17 @@ class CombinationsSimulationTemplate extends React.Component {
   }
 }
 
-CombinationsSimulationTemplate.propTypes = {
+CombinationsSoulbindsSimulationTemplate.propTypes = {
   data: PropTypes.object.isRequired,
   i18nPlugin: PropTypes.object,
   pageContext: PropTypes.object.isRequired
 }
 
-export default CombinationsSimulationTemplate
+export default CombinationsSoulbindsSimulationTemplate
 
 export const query = graphql`
-  query CombinationsSimulation($lang: String!, $wowClass: String!, $simulationType: String!, $fightStyle: String!, $tier: String!, $spec: String!, $variation: String!) {
-    soulbindSimulations: allSitePage(filter: {context: {lang: {eq: $lang}, wowClass: {eq: $wowClass}, fightStyle: {eq: $fightStyle}, tier: {eq: $tier}, spec: {eq: $spec}, variation: {eq: "kyrian"}}}, sort: {fields: [context___simulationTypeOrder, context___simulationFeaturedOrder], order: ASC}) {
+  query CombinationsSoulbindsSimulation($lang: String!, $wowClass: String!, $simulationType: String!, $fightStyle: String!, $tier: String!, $spec: String!, $variation: String!) {
+    soulbindSimulations: allSitePage(filter: {context: {lang: {eq: $lang}, wowClass: {eq: $wowClass}, fightStyle: {eq: $fightStyle}, tier: {eq: $tier}, spec: {eq: $spec}, variation: {eq: $variation}}}, sort: {fields: [context___simulationTypeOrder, context___simulationFeaturedOrder], order: ASC}) {
       edges {
         node {
           path
@@ -185,7 +185,7 @@ export const query = graphql`
         }
       }
     }
-    relatedSimulations: allSitePage(filter: {context: {lang: {eq: $lang}, wowClass: {eq: $wowClass}, fightStyle: {eq: $fightStyle}, tier: {eq: $tier}, spec: {eq: $spec}, variation: {eq: $variation}}}, sort: {fields: [context___simulationTypeOrder, context___simulationFeaturedOrder], order: ASC}) {
+    relatedSimulations: allSitePage(filter: {context: {lang: {eq: $lang}, wowClass: {eq: $wowClass}, fightStyle: {eq: $fightStyle}, tier: {eq: $tier}, spec: {eq: $spec}, variation: {eq: ""}}}, sort: {fields: [context___simulationTypeOrder, context___simulationFeaturedOrder], order: ASC}) {
       edges {
         node {
           path

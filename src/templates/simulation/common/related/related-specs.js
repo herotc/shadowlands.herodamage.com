@@ -9,9 +9,14 @@ import Divider from '@material-ui/core/Divider'
 
 const RelatedSpecs = ({ data: { relatedSpecWithVariations }, spec, variation, t }) => {
   if (!relatedSpecWithVariations || relatedSpecWithVariations.edges.length <= 1) return null
-  const relatedSpecs = relatedSpecWithVariations.edges.filter((edge) => {
+  let relatedSpecs = relatedSpecWithVariations.edges.filter((edge) => {
     return edge.node.context.variation === ''
   })
+  if (relatedSpecs.length === 0) {
+    relatedSpecs = relatedSpecWithVariations.edges.filter((edge) => {
+      return edge.node.context.variation === 'kyrian'
+    })
+  }
   const relatedVariations = relatedSpecWithVariations.edges.filter((edge) => {
     return edge.node.context.spec === spec
   })
