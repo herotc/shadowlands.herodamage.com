@@ -269,7 +269,7 @@ export function wowTrinketLabel (rawItemName, wowClass, spec, templateTalentsMap
   const trinket = getTrinketInformation(parts[0].split(' (')[0])
 
   let label
-  if (!trinket) {
+  if (trinket) {
     const { itemId } = trinket
     label = `<a href="${getWowheadLink(lang)}item=${itemId}">
       <span>${parts[0]}</span>
