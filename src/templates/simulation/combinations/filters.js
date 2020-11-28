@@ -33,7 +33,7 @@ class Filters extends React.Component {
     const { name, talentsTree, wowheadLink } = this.props
     return (
       <Grid item xs={12}>
-        <ExpansionPanel defaultExpanded elevation={1}>
+        <ExpansionPanel elevation={1}>
           <Divider/>
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
             <h3 style={{ margin: 0 }}><Trans>Filters (Click to toggle them on/off from the results)</Trans></h3>

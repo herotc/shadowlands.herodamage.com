@@ -317,7 +317,7 @@ export function wowTalentsLabel (talents, wowClass, spec, lang = defaultLang) {
     if (talentChar !== 0) {
       const col = talentChar - 1
       const { spellId } = talentsTree[row][col]
-      label += `<a href="${getWowheadLink(lang)}spell=${spellId}" data-wh-rename-link="false"></a>`
+      label += `<a href="${getWowheadLink(lang)}spell=${spellId}" data-wh-rename-link="false" style="display: inline-block; min-height: 18px; min-width: 18px;"></a>`
     }
   }
   return label
