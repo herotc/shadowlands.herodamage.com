@@ -1,27 +1,35 @@
 export const simulationDetails = {
-  combinator: {
-    simulationFeaturedOrder: 5,
-    simulationCategory: 'combinations',
-    simulationType: 'combinations-default',
-    simulationTypeOrder: 10,
-    simulationTemplate: 'combinations'
-  },
+  // TODO: remove
   'combinator-early': {
     simulationCategory: 'combinations',
-    simulationType: 'combinations-early',
+    simulationType: 'combinations-earlys',
     simulationTypeOrder: 11,
     simulationTemplate: 'combinations'
   },
-  'combinator-full': {
+  // TODO: remove
+  combinator: {
     simulationCategory: 'combinations',
-    simulationType: 'combinations-full',
+    simulationType: 'combinations-fulls',
     simulationTypeOrder: 12,
     simulationTemplate: 'combinations'
   },
   'combinator-1l': {
+    simulationFeaturedOrder: 5,
     simulationCategory: 'combinations',
     simulationType: 'combinations-1l',
-    simulationTypeOrder: 13,
+    simulationTypeOrder: 10,
+    simulationTemplate: 'combinations'
+  },
+  'combinator-earlys': {
+    simulationCategory: 'combinations',
+    simulationType: 'combinations-earlys',
+    simulationTypeOrder: 11,
+    simulationTemplate: 'combinations'
+  },
+  'combinator-fulls': {
+    simulationCategory: 'combinations',
+    simulationType: 'combinations-fulls',
+    simulationTypeOrder: 12,
     simulationTemplate: 'combinations'
   },
   legendarysimulation: {

@@ -5,14 +5,14 @@ import { wowTalentsLabel } from '../../../utils/wow/ui'
 
 export function getResultsStates (props) {
   const { i18nPlugin: { lang }, pageContext } = props
-  const { resultsRaw, spec, wowClass, simulationType } = pageContext
+  const { resultsRaw, spec, wowClass } = pageContext
 
   const jsonResults = JSON.parse(resultsRaw)
 
   // Iterate over the results to add some information
   const results = []
-  const multiTargets = jsonResults[0].length === 6 // whether the results contains a bossDPS column
-  const maxDPS = jsonResults[0][4] // used to compute the % Diff
+  const multiTargets = jsonResults[0].length === 5 // whether the results contains a bossDPS column
+  const maxDPS = jsonResults[0][3] // used to compute the % Diff
   const selectedTalents = {} // used for talents filter
   for (let row of jsonResults) {
     // result filtering
