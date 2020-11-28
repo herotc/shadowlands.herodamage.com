@@ -9,14 +9,13 @@ import Divider from '@material-ui/core/Divider'
 const RelatedSimulations = ({ data: { soulbindSimulations, relatedSimulations }, simulationFeaturedOrder, simulationCategory, simulationType, t }) => {
   if (!relatedSimulations) return null
   const simulations = soulbindSimulations && soulbindSimulations.edges ? { edges: [...soulbindSimulations.edges, ...relatedSimulations.edges] } : { edges: [...relatedSimulations.edges] }
-  if (simulations.edges.length <= 1) return null
+  if (simulations.edges.length < 1) return null
 
-  const relatedSimulationCategories = simulations.edges.filter((edge) => {
-    return !!edge.node.context.simulationFeaturedOrder
-  })
-  const relatedSimulationTypes = simulations.edges.filter((edge) => {
-    return edge.node.context.simulationCategory === simulationCategory
-  })
+  const relatedSimulationCategories = simulations.edges.filter((edge) => !!edge.node.context.simulationFeaturedOrder)
+  const relatedSimulationTypes = simulations.edges
+    .filter((edge) => edge.node.context.simulationCategory === simulationCategory)
+    .sort((a, b) => a.node.context.simulationTypeOrder < b.node.context.simulationTypeOrder)
+
   return (
     <>
       {relatedSimulationCategories.length >= 1 &&

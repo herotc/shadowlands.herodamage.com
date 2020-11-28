@@ -8,18 +8,16 @@ import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 
 const RelatedSpecs = ({ data: { relatedSpecWithVariations }, spec, variation, t }) => {
-  if (!relatedSpecWithVariations || relatedSpecWithVariations.edges.length <= 1) return null
-  let relatedSpecs = relatedSpecWithVariations.edges.filter((edge) => {
-    return edge.node.context.variation === ''
-  })
+  if (!relatedSpecWithVariations || relatedSpecWithVariations.edges.length < 1) return null
+
+  let relatedSpecs = relatedSpecWithVariations.edges.filter((edge) => edge.node.context.variation === '')
+  // Dirty fix for soulbinds
   if (relatedSpecs.length === 0) {
-    relatedSpecs = relatedSpecWithVariations.edges.filter((edge) => {
-      return edge.node.context.variation === 'kyrian'
-    })
+    relatedSpecs = relatedSpecWithVariations.edges.filter((edge) => edge.node.context.variation === 'kyrian')
   }
-  const relatedVariations = relatedSpecWithVariations.edges.filter((edge) => {
-    return edge.node.context.spec === spec
-  })
+
+  const relatedVariations = relatedSpecWithVariations.edges.filter((edge) => edge.node.context.spec === spec)
+
   return (
     <>
       {relatedSpecs.length >= 1 &&

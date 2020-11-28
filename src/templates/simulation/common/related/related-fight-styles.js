@@ -7,7 +7,8 @@ import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 
 const RelatedFightStyles = ({ data: { relatedFightStyles }, fightStyle, t }) => {
-  if (!relatedFightStyles || relatedFightStyles.edges.length <= 1) return null
+  if (!relatedFightStyles || relatedFightStyles.edges.length < 1) return null
+
   return (
     <div>
       <Divider/>

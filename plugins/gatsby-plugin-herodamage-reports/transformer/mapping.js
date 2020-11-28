@@ -6,17 +6,23 @@ export const simulationDetails = {
     simulationTypeOrder: 10,
     simulationTemplate: 'combinations'
   },
-  'combinator-2c': {
+  'combinator-early': {
     simulationCategory: 'combinations',
-    simulationType: 'combinations-2c',
+    simulationType: 'combinations-early',
     simulationTypeOrder: 11,
-    simulationTemplate: 'combinations-soulbinds'
+    simulationTemplate: 'combinations'
+  },
+  'combinator-full': {
+    simulationCategory: 'combinations',
+    simulationType: 'combinations-full',
+    simulationTypeOrder: 12,
+    simulationTemplate: 'combinations'
   },
   'combinator-1l': {
     simulationCategory: 'combinations',
     simulationType: 'combinations-1l',
-    simulationTypeOrder: 12,
-    simulationTemplate: 'combinations-soulbinds'
+    simulationTypeOrder: 13,
+    simulationTemplate: 'combinations'
   },
   legendarysimulation: {
     simulationFeaturedOrder: 2,

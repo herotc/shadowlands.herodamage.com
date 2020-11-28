@@ -17,13 +17,13 @@ export function getResultsStates (props) {
   for (let row of jsonResults) {
     // result filtering
     const rawTalentLabels = row[1]
-    const rawLabels = row[3]
-    const dps = row[4]
+    const rawLabels = row[2]
+    const dps = row[3]
     const result = { rank: row[0], talents: rawTalentLabels, labels: rawLabels, dps }
 
     result.talentsLabel = wowTalentsLabel(rawTalentLabels, wowClass, spec, lang)
 
-    if (multiTargets) result.bossDPS = row[5]
+    if (multiTargets) result.bossDPS = row[4]
     result.dpsPercentageDifference = (100 * dps / maxDPS - 100).toFixed(1)
 
     results.push(result)

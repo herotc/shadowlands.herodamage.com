@@ -8,6 +8,7 @@ import Divider from '@material-ui/core/Divider'
 
 const RelatedTiers = ({ data: { relatedTiers }, t, tier }) => {
   if (!relatedTiers || relatedTiers.edges.length <= 1) return null
+
   return (
     <div>
       <Divider/>
