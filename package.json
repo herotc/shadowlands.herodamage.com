@@ -49,7 +49,7 @@
     "clear": "shx rm -rf public/* && shx rm -rf .cache",
     "reinstall": "npm run clear && shx rm -rf scripts/i18n/node_modules && shx rm -rf node_modules && npm install",
     "start": "npm run develop",
-    "develop": "npm run clear && cross-env NODE_OPTIONS=\"--max_old_space_size=3072 -r esm\" gatsby develop",
+    "develop": "cross-env NODE_OPTIONS=\"--max_old_space_size=3072 -r esm\" gatsby develop",
     "build": "npm run clear && cross-env NODE_OPTIONS=\"--max_old_space_size=3072 -r esm\" gatsby build",
     "serve": "gatsby serve",
     "dbc": "node -r esm scripts/dbc",
