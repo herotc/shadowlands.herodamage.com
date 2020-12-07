@@ -2,6 +2,7 @@ import load from 'little-loader'
 
 import {
   refreshWowheadLinks,
+  wowConsumableLabel,
   wowLegendaryLabel,
   wowRaceLabel,
   wowSoulbindLabel,
@@ -131,6 +132,14 @@ function processData (simulationType, data, wowClass, spec, talentsMapping, temp
   // Remove labels from data to add interactive ones in HTML
   const labels = []
   switch (simulationType) {
+    case 'consumables': {
+      for (let row = 0; row < data.getNumberOfRows(); row++) {
+        const wowLabel = data.getValue(row, 0)
+        labels.push(wowConsumableLabel(wowLabel, wowClass, spec, talentsMapping, lang))
+        data.setValue(row, 0, '')
+      }
+      break
+    }
     case 'legendaries': {
       for (let row = 0; row < data.getNumberOfRows(); row++) {
         const wowLabel = data.getValue(row, 0)

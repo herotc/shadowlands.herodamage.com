@@ -1,20 +1,6 @@
 export const simulationDetails = {
-  // TODO: remove
-  'combinator-early': {
-    simulationCategory: 'combinations',
-    simulationType: 'combinations-earlys',
-    simulationTypeOrder: 11,
-    simulationTemplate: 'combinations'
-  },
-  // TODO: remove
-  combinator: {
-    simulationCategory: 'combinations',
-    simulationType: 'combinations-fulls',
-    simulationTypeOrder: 12,
-    simulationTemplate: 'combinations'
-  },
   'combinator-1l': {
-    simulationFeaturedOrder: 5,
+    simulationFeaturedOrder: 6,
     simulationCategory: 'combinations',
     simulationType: 'combinations-1l',
     simulationTypeOrder: 10,
@@ -32,6 +18,13 @@ export const simulationDetails = {
     simulationTypeOrder: 12,
     simulationTemplate: 'combinations'
   },
+  consumablesimuatlion: {
+    simulationFeaturedOrder: 4,
+    simulationCategory: 'consumables',
+    simulationType: 'consumables',
+    simulationTypeOrder: 10,
+    simulationTemplate: 'consumables'
+  },
   legendarysimulation: {
     simulationFeaturedOrder: 2,
     simulationCategory: 'legendaries',
@@ -40,7 +33,7 @@ export const simulationDetails = {
     simulationTemplate: 'legendaries'
   },
   racesimulation: {
-    simulationFeaturedOrder: 4,
+    simulationFeaturedOrder: 5,
     simulationCategory: 'races',
     simulationType: 'races',
     simulationTypeOrder: 10,

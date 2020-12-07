@@ -1,4 +1,5 @@
 import ClassSpec from '../../assets/wow-data/ClassSpec.json'
+import Consumables from '../../assets/wow-data/Consumables.json'
 import Legendaries from '../../assets/wow-data/Legendaries.json'
 import Soulbinds from '../../assets/wow-data/Soulbinds.json'
 import Talents from '../../assets/wow-data/Talent.json'
@@ -33,6 +34,15 @@ export function getWowClassIdAndSpecId (wowClass, spec) {
   const classId = classSpec.classId
   const specId = classSpec.specIds[spec]
   return { classId, specId }
+}
+
+/**
+ *
+ * @param consumableName
+ * @returns {*}
+ */
+export function getConsumableInformation (consumableName) {
+  return Consumables[consumableName]
 }
 
 /**

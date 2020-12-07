@@ -1,5 +1,6 @@
 // Dependencies
 import {
+  getConsumableInformation,
   getLegendaryInformation,
   getSoulbindInformation,
   getTalentsMappingDifference,
@@ -120,6 +121,54 @@ export function getWowheadDomain (lang) {
 export function getWowheadLink (lang) {
   const wowheadDomain = getWowheadDomain(lang)
   return `https://${wowheadDomain}.wowhead.com/`
+}
+
+/**
+ *
+ * @param rawConsumableName
+ * @param wowClass
+ * @param spec
+ * @param templateTalentsMapping
+ * @param lang
+ * @param container
+ * @returns {string}
+ */
+export function wowConsumableLabel (rawConsumableName, wowClass, spec, templateTalentsMapping, lang = defaultLang, container = true) {
+  // Split up the variations
+  const parts = rawConsumableName.split('--')
+  const consumable = getConsumableInformation(parts[0].split(' (')[0])
+
+  let label
+  if (consumable) {
+    const { itemId } = consumable
+    label = `<a href="${getWowheadLink(lang)}item=${itemId}">
+      <span>${parts[0]}</span>
+    </a>`
+  } else {
+    label = `${parts[0]}`
+  }
+
+  const variant = parts[0].split(' (')[1]
+  if (variant) label += `&nbsp;(${variant}`
+  // Add back the formatted variations
+  if (parts[1]) {
+    const variations = parts[1].split(';')
+    const variationStrings = []
+    for (const variation of variations) {
+      const parts = variation.split(':')
+      const variationName = parts[0]
+      const variationValue = parts[1]
+      switch (variationName) {
+        case 'talents':
+          const talents = getTalentsMappingDifference(templateTalentsMapping, variationValue)
+          variationStrings.push(`${wowTalentsLabel(talents, wowClass, spec, lang)}`)
+          break
+      }
+    }
+    label += `&nbsp;|&nbsp;${variationStrings.join(' - ')}`
+  }
+
+  return (container && `<div class="label-container">${label}</div>`) || `${label}`
 }
 
 /**
