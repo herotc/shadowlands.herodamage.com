@@ -18,7 +18,7 @@ export const simulationDetails = {
     simulationTypeOrder: 12,
     simulationTemplate: 'combinations'
   },
-  consumablesimuatlion: {
+  consumablesimulation: {
     simulationFeaturedOrder: 4,
     simulationCategory: 'consumables',
     simulationType: 'consumables',
