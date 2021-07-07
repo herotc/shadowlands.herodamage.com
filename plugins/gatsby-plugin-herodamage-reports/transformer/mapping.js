@@ -1,6 +1,5 @@
 export const simulationDetails = {
   'combinator-1l': {
-    simulationFeaturedOrder: 6,
     simulationCategory: 'combinations',
     simulationType: 'combinations-1l',
     simulationTypeOrder: 10,
@@ -13,6 +12,7 @@ export const simulationDetails = {
     simulationTemplate: 'combinations'
   },
   'combinator-fulls': {
+    simulationFeaturedOrder: 6,
     simulationCategory: 'combinations',
     simulationType: 'combinations-fulls',
     simulationTypeOrder: 12,
