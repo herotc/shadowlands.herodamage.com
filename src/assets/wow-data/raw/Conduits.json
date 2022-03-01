@@ -1838,7 +1838,7 @@
     "conduitName": "Well-Honed Instincts",
     "conduitSpellID": 340553,
     "conduitType": 2,
-    "specs": [104]
+    "specs": [102, 103, 104, 105]
   },
   {
     "conduitId": 272,
